@@ -7,6 +7,8 @@
 # 1*1 + 0*0 + 0*0 = 1
 
 #2
+
+# Solution 1
 int next_n(int n) {
     int r = 0;
     while (n != 0) {
@@ -39,7 +41,7 @@ bool isHappy(int n) {
     return n == 1;
 }
 
-#SOLUTION2 
+#SOLUTION 2 
 // 優點 不用建立一個list來判斷是否有重複 
 // 使用 algorithm (cycle detection, (cycle finding)https://visualgo.net/en) 
 
