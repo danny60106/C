@@ -1,1 +1,67 @@
+# Input:19
+# Output:true
+# Explanation
+# 1*1 + 9*9 = 82
+# 8*8 + 2*2 = 68
+# 6*6 + 8*8 = 100
+# 1*1 + 0*0 + 0*0 = 1
 
+#2
+int next_n(int n) {
+    int r = 0;
+    while (n != 0) {
+       int d = n % 10;
+       n /= 10;
+       r += d * d;
+    }
+    return r;
+}
+
+bool contains(int* history, int size, int n) {    //檢查n是否重複
+    for (int i = 0; i < size; i++) {
+        if(history[i] == n) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isHappy(int n) {
+    int history[10000];
+    int size = 0;
+    
+    while (!contains(history, size, n)) {
+        history[size] = n;
+        size ++;        
+        n = next_n(n);
+    }
+    
+    return n == 1;
+}
+
+#SOLUTION2 
+// 優點 不用建立一個list來判斷是否有重複 
+// 使用 algorithm (cycle detection, (cycle finding)https://visualgo.net/en) 
+
+int next_n(int n) {
+    int r = 0;
+    while (n != 0) {
+       int d = n % 10;
+       n /= 10;
+       r += d * d;
+    }
+    return r;
+}
+
+bool isHappy2(int n) {
+    int slow = n ; // slow : 19
+    int fast = n ; // fast : 19
+    
+    do {
+        slow = next_n(slow);          
+        fast = next_n(next_n(fast));
+    } while (slow != fast)
+    
+    return slow == 1;
+    //return fast == 1;  //也可行
+}
