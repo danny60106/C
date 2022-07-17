@@ -4,19 +4,37 @@
 int maxProfit(int* prices, int pricesSize){
     // prices: [7, 1, 5, 3, 6, 4], priceSize: 6
     
+    if (pricesSize <= 1) return 0; //邊界條件
+    
     // 最後一天是否要進行買賣?
     
     // max (
+    
+    int profit;
+    int max = 0;
+    
         // 1. 假設不賣:
-        //    [7, 1, 5, 3, 6, 4] => [7, 1, 5, 3, 6]
+        //    [7, 1, 5, 3, 6, 4] => maxProfit(price, 6)
+        //    [7, 1, 5, 3, 6]    => maxProfit(price, 5)
+    profit = maxProfit(prices, pricesSize-1);
+    if (profit > max) {
+        max = profit;
+    }
         
         // 2. 假設決定要賣:
         // max(
-        //   [7, 1, 5, 3, 6] + (6, 4),
-        //   [7, 1, 5, 3] + (3, 4),
-        //   [7, 1, 5] + (5, 4),
-        //   [7, 1] + (1, 4),
-        //   [7] + (7, 4)
+        //   [7, 1, 5, 3, 6] + (6, 4), => maxProfit(price, 5) + (prices[5]-prices[4])
+        //   [7, 1, 5, 3] + (3, 4),    => maxProfit(price, 4) + (prices[5]-prices[3])
+        //   [7, 1, 5] + (5, 4),       => maxProfit(price, 3) + (prices[5]-prices[2])
+        //   [7, 1] + (1, 4),          => maxProfit(price, 2) + (prices[5]-prices[1])
+        //   [7] + (7, 4)              => maxProfit(price, 1) + (prices[5]-prices[0])
         // )
+      for (int i = 1; i <= pricesSize-1; i++) {
+          profit = maxProfit(prices, i) + prices[pricesSize-1] - prices[i-1];
+          if (profit > max) {
+                max = profit;
+          }
+      }
+      return max;
     // )
 }
